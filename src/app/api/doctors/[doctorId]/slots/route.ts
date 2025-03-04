@@ -5,13 +5,25 @@ import { env } from "~/env";
 import { difMins, minsToMs } from "~/lib/utils";
 import { CreateSlotsBodySchema } from "~/lib/zod-schema/slots";
 import { db } from "~/server/db";
-import { repeatingSlotRules, slots } from "~/server/db/schema";
+import { doctors, repeatingSlotRules, slots } from "~/server/db/schema";
 
 export const POST = async (
   req: NextRequest,
   { params }: { params: Promise<{ doctorId: string }> },
 ) => {
   const { doctorId } = await params;
+
+  const doctorExists = await db.query.doctors.findFirst({
+    where: eq(doctors.id, doctorId),
+  });
+  if (!doctorExists)
+    return NextResponse.json(
+      {
+        success: false,
+        message: "No doctor exists with this ID",
+      },
+      { status: 404 },
+    );
 
   let body;
   try {
