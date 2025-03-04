@@ -9,10 +9,10 @@ export const doctors = pgTable("doctors", {
     .$defaultFn(() => createId())
     .notNull()
     .primaryKey(),
-  username: text("username"),
-  email: text("email"),
-  firstName: text("first_name"),
-  lastName: text("last_name"),
+  username: text("username").notNull(),
+  email: text("email").notNull(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
 });
 
 export const doctorsRelations = relations(doctors, ({ many }) => ({
