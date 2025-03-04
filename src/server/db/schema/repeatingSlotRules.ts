@@ -1,9 +1,10 @@
 import { createId } from "@paralleldrive/cuid2";
-import { relations, sql } from "drizzle-orm";
-import { integer, pgEnum, pgTable, text } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { doctors } from "./doctors";
 
 export const repeatingType = pgEnum("repeating_type", ["daily", "weekly"]);
+export const repeatingSlotDuration = pgEnum("slot_duration", ["15m", "30m"]);
 
 export const repeatingSlotRules = pgTable("repeating_slot_rules", {
   id: text("id")
@@ -13,13 +14,10 @@ export const repeatingSlotRules = pgTable("repeating_slot_rules", {
   doctorId: text("doctor_id")
     .notNull()
     .references(() => doctors.id),
-  //we store the hours, or days, that we should repeat the slots here:
-  //for example, if repeating_type is daily we would store [13,14] for 1&2pm repeating
-  repeatingValues: integer("repeating_values")
-    .array()
-    .notNull()
-    .default(sql`'{}'::int[]`),
+  startTime: timestamp("start_time").notNull(),
+  endTime: timestamp("end_time").notNull(),
   repeatingType: repeatingType("repeating_type").notNull(),
+  repeatingDuration: repeatingSlotDuration("repeating_slot_duration").notNull(),
 });
 
 export const repeatingSlotRulesRelations = relations(
