@@ -1,12 +1,11 @@
 import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
-import { pgEnum, text, timestamp } from "drizzle-orm/pg-core";
-import { createTable } from "../schema";
+import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { doctors } from "./doctors";
 
 export const slotStatus = pgEnum("slot_status", ["available", "booked"]);
 
-export const slots = createTable("slots", {
+export const slots = pgTable("slots", {
   id: text("id")
     .$defaultFn(() => createId())
     .notNull()

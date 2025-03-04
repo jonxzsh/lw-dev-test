@@ -1,12 +1,11 @@
 import { createId } from "@paralleldrive/cuid2";
 import { relations, sql } from "drizzle-orm";
-import { integer, pgEnum, text } from "drizzle-orm/pg-core";
-import { createTable } from "../schema";
+import { integer, pgEnum, pgTable, text } from "drizzle-orm/pg-core";
 import { doctors } from "./doctors";
 
 export const repeatingType = pgEnum("repeating_type", ["daily", "weekly"]);
 
-export const repeatingSlotRules = createTable("repeating_slot_rules", {
+export const repeatingSlotRules = pgTable("repeating_slot_rules", {
   id: text("id")
     .$defaultFn(() => createId())
     .notNull()

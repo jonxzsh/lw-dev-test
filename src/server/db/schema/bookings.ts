@@ -1,11 +1,10 @@
 import { createId } from "@paralleldrive/cuid2";
 import { relations, sql } from "drizzle-orm";
-import { text, timestamp } from "drizzle-orm/pg-core";
-import { createTable } from "../schema";
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { patients } from "./patients";
 import { slots } from "./slots";
 
-export const bookings = createTable("bookings", {
+export const bookings = pgTable("bookings", {
   id: text("id")
     .$defaultFn(() => createId())
     .notNull()
