@@ -8,7 +8,7 @@ export const CreateSlotsBodySchema = z
     repeating: z
       .object({
         repeating_type: z.enum(["daily", "weekly"]),
-        repeating_weekdays: z.array(z.number()).optional(),
+        repeating_weekdays: z.array(z.number().min(0).max(6)).optional(), //js Date object Wkdays (ex: 0 for sunday, 6 for sat)
       })
       .optional(),
   })

@@ -45,12 +45,30 @@ export const POST = async (
     );
 
   if (body.repeating) {
-    const repeatingSlotRule = await db.insert(repeatingSlotRules).values({
-      startTime,
-      endTime,
-      repeatingDuration: body.duration,
-      repeatingType: body.repeating.repeating_type,
-      doctorId,
+    const insertedRepeatingSlotRules = await db
+      .insert(repeatingSlotRules)
+      .values({
+        startTime,
+        endTime,
+        repeatingDuration: body.duration,
+        repeatingType: body.repeating.repeating_type,
+        repeatingWeekdays: body.repeating.repeating_weekdays,
+        doctorId,
+      })
+      .returning();
+    const insertedRepeatingSlotRule = insertedRepeatingSlotRules.at(0);
+    if (!insertedRepeatingSlotRule)
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Internal Database Error",
+        },
+        { status: 500 },
+      );
+
+    return NextResponse.json({
+      success: true,
+      insertedRepeatingSlotRule,
     });
   } else {
     const totalSlots = Math.round(minsBetween / durationMins);

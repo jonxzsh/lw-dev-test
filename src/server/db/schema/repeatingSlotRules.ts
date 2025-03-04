@@ -1,6 +1,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
-import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { doctors } from "./doctors";
 
 export const repeatingType = pgEnum("repeating_type", ["daily", "weekly"]);
@@ -18,6 +18,7 @@ export const repeatingSlotRules = pgTable("repeating_slot_rules", {
   endTime: timestamp("end_time").notNull(),
   repeatingType: repeatingType("repeating_type").notNull(),
   repeatingDuration: repeatingSlotDuration("repeating_slot_duration").notNull(),
+  repeatingWeekdays: integer("repeating_weekdays").array(),
 });
 
 export const repeatingSlotRulesRelations = relations(
