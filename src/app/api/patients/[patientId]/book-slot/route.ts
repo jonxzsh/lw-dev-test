@@ -70,6 +70,7 @@ export const POST = async (
         reason: body.booking_reason ?? null,
         slotId: slot.id,
         patientId: patientExists.id,
+        doctorId: slot.doctorId,
       })
       .returning();
     const insertedBooking = insertedBookings.at(0);
@@ -167,6 +168,7 @@ export const POST = async (
       .values({
         slotId: insertedSlot.id,
         patientId: patientExists.id,
+        doctorId: repeatingRule.doctorId,
         reason: body.booking_reason,
       })
       .returning();

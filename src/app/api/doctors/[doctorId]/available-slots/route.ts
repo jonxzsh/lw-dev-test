@@ -61,7 +61,6 @@ export const GET = async (
     duration: s.duration,
     repeatingRuleId: s.repeatingSlotRuleId,
   }));
-  console.log(availableSlotsFormatted);
 
   let availableSlots: ApiSlot[] = [...availableSlotsFormatted];
 
