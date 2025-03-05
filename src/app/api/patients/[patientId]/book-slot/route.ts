@@ -152,6 +152,7 @@ export const POST = async (
         startsAt: requestedStartAt,
         endsAt: requestedEndsAt,
         status: "booked",
+        repeatingSlotRuleId: repeatingRule.id,
       })
       .returning();
     const insertedSlot = insertedSlots.at(0);
