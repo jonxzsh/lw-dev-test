@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "36233e89-1536-4333-9659-5269d8497097",
+		"name": "LW Dev Test Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34869962"
+	},
+	"item": [
+		{
+			"name": "List Doctors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/api/doctors/",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"api",
+						"doctors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Doctor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test_doctor\",\n    \"email\": \"testdoctor@test.com\",\n    \"first_name\": \"James\",\n    \"last_name\": \"Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/api/doctors/",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"api",
+						"doctors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Doctor Slots",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"start_time\": \"2014-12-25T10:00:00Z\",\n    \"end_time\": \"2014-12-25T11:30:00Z\",\n    \"duration\": \"15m\" //15m or 30m\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/api/doctors/cew1k5qfc2tu4zqj7ywpbwpd/slots",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"api",
+						"doctors",
+						"cew1k5qfc2tu4zqj7ywpbwpd",
+						"slots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Doctor Slots - Repeating Rule",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"start_time\": \"2014-12-25T15:00:00Z\",\n    \"end_time\": \"2014-12-25T16:30:00Z\",\n    \"duration\": \"15m\", //15m or 30m\n    \"repeating\": {\n        \"repeating_type\": \"daily\" //daily or weekly\n        // \"repeating_weekdays\": [0, 1, 6] //repeats on Sunday, Monday and Saturday\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/api/doctors/cew1k5qfc2tu4zqj7ywpbwpd/slots",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"api",
+						"doctors",
+						"cew1k5qfc2tu4zqj7ywpbwpd",
+						"slots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Doctor Available Slots",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test_doctor\",\n    \"email\": \"testdoctor@test.com\",\n    \"first_name\": \"James\",\n    \"last_name\": \"Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/api/doctors/cew1k5qfc2tu4zqj7ywpbwpd/available-slots?date=2014-12-21",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"api",
+						"doctors",
+						"cew1k5qfc2tu4zqj7ywpbwpd",
+						"available-slots"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2014-12-21"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Doctor Bookings",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"test_doctor\",\n    \"email\": \"testdoctor@test.com\",\n    \"first_name\": \"James\",\n    \"last_name\": \"Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/api/doctors/cew1k5qfc2tu4zqj7ywpbwpd/bookings?start_date=2014-12-21&end_date=2014-12-30",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"api",
+						"doctors",
+						"cew1k5qfc2tu4zqj7ywpbwpd",
+						"bookings"
+					],
+					"query": [
+						{
+							"key": "start_date",
+							"value": "2014-12-21"
+						},
+						{
+							"key": "end_date",
+							"value": "2014-12-30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Patients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/api/patients",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"api",
+						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Patient",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"John\",\n    \"last_name\": \"Doe\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/api/patients",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"api",
+						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Book Slot - By DB ID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"slot_type\": \"present_in_database\",\n    \"slot_id\": \"ly1um3rz5g3ztrn94mtbekra\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/api/patients/qcod04ejxtfj64fgcn4l6i3b/book-slot",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"api",
+						"patients",
+						"qcod04ejxtfj64fgcn4l6i3b",
+						"book-slot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Book Slot - By Rule ID + Data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"slot_type\": \"rule_generated\",\n    \"rule_slot\": {\n        \"rule_id\": \"j1k3hugyaz0qgqcgtlhagybo\",\n        \"starts_at\": \"2014-12-25T12:00:00.000Z\",\n        \"ends_at\": \"2014-12-25T12:15:00.000Z\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/api/patients/qcod04ejxtfj64fgcn4l6i3b/book-slot",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"api",
+						"patients",
+						"qcod04ejxtfj64fgcn4l6i3b",
+						"book-slot"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "app_url",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
