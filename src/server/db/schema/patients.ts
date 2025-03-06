@@ -12,6 +12,6 @@ export const patients = pgTable("patients", {
   lastName: text("last_name").notNull(),
 });
 
-export const patientsRelations = relations(patients, ({ one, many }) => ({
+export const patientsRelations = relations(patients, ({ many }) => ({
   slot: many(slots),
 }));

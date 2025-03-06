@@ -1,6 +1,6 @@
 import { and, eq, gt, lt } from "drizzle-orm";
 import { db } from "~/server/db";
-import { repeatingSlotRules, slots } from "~/server/db/schema";
+import { type repeatingSlotRules, slots } from "~/server/db/schema";
 
 export const difMins = (a: Date, b: Date) =>
   Math.round((a.getTime() - b.getTime()) / 60000);

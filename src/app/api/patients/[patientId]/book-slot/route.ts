@@ -1,5 +1,5 @@
 import { and, eq, gt, lt } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { env } from "~/env";
 import { difMins, minsToMs } from "~/lib/utils";
 import { BookSlotBodySchema } from "~/lib/zod-schema/slots";
@@ -31,7 +31,7 @@ export const POST = async (
 
   let body;
   try {
-    const bodyJson = await req.json();
+    const bodyJson: unknown = await req.json();
     body = BookSlotBodySchema.parse(bodyJson);
   } catch (e) {
     return NextResponse.json(

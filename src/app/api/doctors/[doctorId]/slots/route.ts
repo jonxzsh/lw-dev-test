@@ -1,6 +1,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import { and, eq, gt, lt } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { env } from "~/env";
 import { difMins, minsToMs } from "~/lib/utils";
 import { CreateSlotsBodySchema } from "~/lib/zod-schema/slots";
@@ -27,7 +27,7 @@ export const POST = async (
 
   let body;
   try {
-    const bodyJson = await req.json();
+    const bodyJson: unknown = await req.json();
     body = CreateSlotsBodySchema.parse(bodyJson);
   } catch (e) {
     return NextResponse.json(
@@ -104,10 +104,7 @@ export const POST = async (
       };
     });
 
-    for (let i = 0; i < slotsToInsert.length; i++) {
-      const slot = slotsToInsert[i];
-      if (!slot) continue;
-
+    for (const slot of slotsToInsert) {
       const slotConflict = await db.query.slots.findFirst({
         where: and(
           eq(slots.doctorId, doctorId),
@@ -119,7 +116,7 @@ export const POST = async (
         return NextResponse.json(
           {
             success: false,
-            message: `Slot Conflict: Slot ${slotConflict.id}'s timing conflicts with the slot you tried to create starting ${slot.startsAt} and ending at ${slot.endsAt}`,
+            message: `Slot Conflict: Slot ${slotConflict.id}'s timing conflicts with the slot you tried to create starting ${slot.startsAt.toLocaleTimeString()} and ending at ${slot.endsAt.toLocaleTimeString()}`,
           },
           { status: 400 },
         );

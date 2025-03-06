@@ -1,5 +1,5 @@
 import { eq, or } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { env } from "~/env";
 import { CreateDoctorBodySchema } from "~/lib/zod-schema/doctor";
 import { db } from "~/server/db";
@@ -8,7 +8,7 @@ import { doctors } from "~/server/db/schema";
 export const POST = async (req: NextRequest) => {
   let body;
   try {
-    const bodyJson = await req.json();
+    const bodyJson: unknown = await req.json();
     body = CreateDoctorBodySchema.parse(bodyJson);
   } catch (e) {
     return NextResponse.json(

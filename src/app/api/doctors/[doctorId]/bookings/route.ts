@@ -1,15 +1,7 @@
 import { and, eq, gt, lt } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { bookings, doctors, patients, slots } from "~/server/db/schema";
-
-type ApiSlot = {
-  slotId: string | null;
-  startsAt: Date;
-  endsAt: Date;
-  duration: string;
-  repeatingRuleId: string | null;
-};
 
 export const GET = async (
   req: NextRequest,

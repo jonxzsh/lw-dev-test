@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { env } from "~/env";
 import { CreatePatientBodySchema } from "~/lib/zod-schema/patients";
 import { db } from "~/server/db";
@@ -7,7 +7,7 @@ import { patients } from "~/server/db/schema";
 export const POST = async (req: NextRequest) => {
   let body;
   try {
-    const bodyJson = await req.json();
+    const bodyJson: unknown = await req.json();
     body = CreatePatientBodySchema.parse(bodyJson);
   } catch (e) {
     return NextResponse.json(

@@ -1,5 +1,5 @@
 import { and, arrayContains, eq, gt, lt, or } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { generateSlotsFromRepeatingRule } from "~/lib/utils";
 import { db } from "~/server/db";
 import { doctors, repeatingSlotRules, slots } from "~/server/db/schema";
@@ -82,10 +82,7 @@ export const GET = async (
     ),
   });
 
-  for (let i = 0; i < repeatSlotRules.length; i++) {
-    const repeatingRule = repeatSlotRules[i];
-    if (!repeatingRule) continue;
-
+  for (const repeatingRule of repeatSlotRules) {
     const ruleSlots = await generateSlotsFromRepeatingRule(repeatingRule);
     const formattedRuleSlots = ruleSlots.map((s) => ({
       slotId: null,
