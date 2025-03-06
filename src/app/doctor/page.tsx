@@ -1,6 +1,9 @@
 "use client";
 
+import { ArrowLeftIcon } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
 import { DoctorType, GetDoctorsSuccessResponse } from "~/lib/types";
 import CreateNewDoctor from "../_components/doctor/create-new-doctor";
@@ -50,6 +53,12 @@ const Page = () => {
 
   return (
     <div className="flex flex-col gap-8">
+      <Link href="/">
+        <Button size="sm" variant="outline">
+          <ArrowLeftIcon />
+          Go Back
+        </Button>
+      </Link>
       <div className="flex flex-col">
         <StyledH2>Select a doctor profile to continue</StyledH2>
         <StyledText>

@@ -1,5 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { UserPlusIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -117,6 +118,7 @@ const CreateNewDoctor = ({ refresh }: { refresh: () => void }) => {
           disabled={loading || showSuccessIndicator}
         >
           {showSuccessIndicator ? "Success" : "Create Doctor"}
+          <UserPlusIcon />
         </Button>
       </form>
     </Form>

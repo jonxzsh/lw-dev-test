@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import {
@@ -35,9 +36,10 @@ const SelectExistingDoctor = ({
             ))}
           </SelectContent>
         </Select>
-        <Link href={`/doctor/${selectedDoctor}`}>
+        <Link href={`/doctor/${selectedDoctor}/bookings`}>
           <Button variant="default" disabled={selectedDoctor === null}>
             Continue
+            <ArrowRightIcon />
           </Button>
         </Link>
       </div>
