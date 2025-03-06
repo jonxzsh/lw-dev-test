@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import {
   Select,
@@ -34,9 +35,11 @@ const SelectExistingDoctor = ({
             ))}
           </SelectContent>
         </Select>
-        <Button variant="outline" disabled={selectedDoctor === null}>
-          Continue
-        </Button>
+        <Link href={`/doctor/${selectedDoctor}`}>
+          <Button variant="outline" disabled={selectedDoctor === null}>
+            Continue
+          </Button>
+        </Link>
       </div>
     </div>
   );

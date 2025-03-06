@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Separator } from "~/components/ui/separator";
 import { DoctorType, GetDoctorsSuccessResponse } from "~/lib/types";
+import CreateNewDoctor from "../_components/doctor/create-new-doctor";
 import SelectExistingDoctor from "../_components/doctor/select-existing-doctor";
 import ErrorMessage from "../_components/error";
 import { PageLoadingIndicator } from "../_components/loading-indicator";
@@ -16,6 +18,7 @@ const Page = () => {
 
   const fetchExistingDoctors = async () => {
     try {
+      setLoading(true);
       const response = await fetch("/api/doctors", {
         credentials: "include",
       });
@@ -53,12 +56,15 @@ const Page = () => {
           You can select a doctor profile below - or create a new one
         </StyledText>
       </div>
-      <div className="flex w-full justify-between">
+      <div className="flex flex-col gap-4">
+        <Separator />
         <SelectExistingDoctor
           doctors={doctors}
           selectedDoctor={selectedDoctor}
           setSelectedDoctor={setSelectedDoctor}
         />
+        <Separator />
+        <CreateNewDoctor refresh={() => fetchExistingDoctors()} />
       </div>
     </div>
   );
