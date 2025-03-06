@@ -6,6 +6,8 @@ COPY package.json package-lock.json* ./
 
 RUN npm install
 
+RUN apk add --no-cache postgresql-client
+
 COPY . .
 
 RUN npm run build
