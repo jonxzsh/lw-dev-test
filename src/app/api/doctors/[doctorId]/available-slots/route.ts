@@ -1,7 +1,7 @@
 import { and, arrayContains, eq, gt, lt, or } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { generateSlotsFromRepeatingRule } from "~/lib/b-utils";
-import { GetAvailableSlotsSuccessResponse } from "~/lib/types";
+import { type GetAvailableSlotsSuccessResponse } from "~/lib/types";
 import { db } from "~/server/db";
 import { doctors, repeatingSlotRules, slots } from "~/server/db/schema";
 
@@ -90,7 +90,7 @@ export const GET = async (
       ...s,
     }));
     const nonConflictingSlots = formattedRuleSlots.filter((s) => {
-      let isConflicting =
+      const isConflicting =
         availableSlots.findIndex((eS) => {
           const today = new Date();
 
@@ -110,7 +110,7 @@ export const GET = async (
           newEndDate.setHours(s.endsAt.getHours());
           newEndDate.setMinutes(s.endsAt.getMinutes());
 
-          let c =
+          const c =
             newStartDate.getTime() < existingEndDate.getTime() &&
             newEndDate.getTime() > existingStartDate.getTime();
 

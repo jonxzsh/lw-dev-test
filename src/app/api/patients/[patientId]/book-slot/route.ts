@@ -105,7 +105,6 @@ export const POST = async (
     const repeatingRuleDuration =
       repeatingRule.repeatingDuration === "15m" ? 15 : 30;
 
-    console.log(requestedDuration, repeatingRuleDuration);
     const invalidConditions = [
       requestedDuration !== repeatingRuleDuration, //ensure the duration isn't longer than the rule's duration
       requestedStartAt.getTime() > repeatingRule.endTime.getTime(), //ensure it doesn't start after the rule time ends

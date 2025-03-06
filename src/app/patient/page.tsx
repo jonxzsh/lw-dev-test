@@ -5,7 +5,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
-import { GetPatientsSuccessResponse, PatientType } from "~/lib/types";
+import {
+  getPatientsSuccessResponseSchema,
+  type PatientType,
+} from "~/lib/types";
 import ErrorMessage from "../_components/error";
 import { PageLoadingIndicator } from "../_components/loading-indicator";
 import CreateNewPatient from "../_components/patient/create-new-patient";
@@ -31,7 +34,8 @@ const Page = () => {
           `Received invalid API response: ${await response.text()}`,
         );
 
-      const data: GetPatientsSuccessResponse = await response.json();
+      const rawJson: unknown = await response.json();
+      const data = getPatientsSuccessResponseSchema.parse(rawJson);
 
       setPatients(data.patients);
       setLoading(false);
@@ -42,7 +46,7 @@ const Page = () => {
   };
 
   useEffect(() => {
-    fetchExistingPatients();
+    void fetchExistingPatients();
   }, []);
 
   if (error !== null) {

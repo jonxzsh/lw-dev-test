@@ -3,7 +3,7 @@
 import { RotateCcwIcon, SearchIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { z } from "zod";
+import { type z } from "zod";
 import DatePicker from "~/app/_components/date-picker";
 import ErrorMessage from "~/app/_components/error";
 import { StyledH4 } from "~/app/_components/typography";
@@ -17,13 +17,12 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import {
-  ApiSlot,
-  BookSlotSuccessResponse,
-  DoctorType,
-  GetAvailableSlotsSuccessResponse,
-  GetDoctorsSuccessResponse,
+  getAvailableSlotsSuccessResponseSchema,
+  getDoctorsSuccessResponseSchema,
+  type ApiSlot,
+  type DoctorType,
 } from "~/lib/types";
-import { BookSlotBodySchema } from "~/lib/zod-schema/slots";
+import { type BookSlotBodySchema } from "~/lib/zod-schema/slots";
 
 const Page = () => {
   const router = useRouter();
@@ -53,7 +52,8 @@ const Page = () => {
           `Received invalid API response: ${await response.text()}`,
         );
 
-      const data: GetDoctorsSuccessResponse = await response.json();
+      const rawJson: unknown = await response.json();
+      const data = getDoctorsSuccessResponseSchema.parse(rawJson);
 
       setDoctors(data.doctors);
       setLoading(false);
@@ -64,7 +64,7 @@ const Page = () => {
   };
 
   useEffect(() => {
-    fetchExistingDoctors();
+    void fetchExistingDoctors();
   }, []);
 
   const fetchAvailableSlots = async () => {
@@ -82,7 +82,8 @@ const Page = () => {
           `Received invalid API response: ${await response.text()}`,
         );
 
-      const data: GetAvailableSlotsSuccessResponse = await response.json();
+      const rawJson: unknown = await response.json();
+      const data = getAvailableSlotsSuccessResponseSchema.parse(rawJson);
 
       setAvailableSlots(data.slots);
       setSearchLoading(false);
@@ -103,7 +104,7 @@ const Page = () => {
         credentials: "include",
       });
 
-      const data: BookSlotSuccessResponse = await response.json();
+      if (!response.ok) return setError(`API Error: ${await response.text()}`);
 
       router.push(`/patient/${patientId}/bookings`);
     } catch (e) {
@@ -179,7 +180,7 @@ const Page = () => {
             className="flex flex-col gap-1 rounded-md border border-border p-4 hover:cursor-pointer hover:bg-accent hover:text-accent-foreground"
             key={`a-slot-${index}`}
             onClick={() => {
-              let requestObj: z.infer<typeof BookSlotBodySchema> = {
+              const requestObj: z.infer<typeof BookSlotBodySchema> = {
                 slot_type: slot.repeatingRuleId
                   ? "rule_generated"
                   : "present_in_database",
@@ -201,7 +202,7 @@ const Page = () => {
                 };
               }
 
-              bookSlot(requestObj);
+              void bookSlot(requestObj);
             }}
           >
             <div className="text-sm tracking-tight">

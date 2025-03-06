@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { DoctorType } from "~/lib/types";
+import { type DoctorType } from "~/lib/types";
 import { StyledH4 } from "../typography";
 
 const SelectExistingDoctor = ({

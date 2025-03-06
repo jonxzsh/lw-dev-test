@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { UserPlusIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 import { Button } from "~/components/ui/button";
 import {
   Form,
@@ -14,7 +14,6 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { CreateDoctorSuccessResponse } from "~/lib/types";
 import { CreateDoctorBodySchema } from "~/lib/zod-schema/doctor";
 import { StyledH4 } from "../typography";
 
@@ -39,8 +38,6 @@ const CreateNewDoctor = ({ refresh }: { refresh: () => void }) => {
 
       if (!response.ok)
         throw new Error(`API returned error: ${await response.text()}`);
-
-      const data: CreateDoctorSuccessResponse = await response.json();
 
       setLoading(false);
       setShowSuccessIndicator(true);

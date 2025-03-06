@@ -8,7 +8,7 @@ export const difMins = (a: Date, b: Date) =>
 export const minsToMs = (mins: number) => mins * 60000;
 
 export const msSinceDayStart = (v: Date) => {
-  let c = new Date(v); //to stop js overwriting on setHours
+  const c = new Date(v); //to stop js overwriting on setHours
   return v.getTime() - c.setHours(0, 0, 0, 0);
 };
 
@@ -70,8 +70,6 @@ export const generateSlotsFromRepeatingRule = async (
   const generatedSlots: RuleGeneratedSlot[] = ensuredSlots.filter(
     (s) => s !== false,
   );
-
-  console.log(generatedSlots);
 
   return generatedSlots;
 };
