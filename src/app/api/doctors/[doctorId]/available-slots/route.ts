@@ -1,6 +1,7 @@
 import { and, arrayContains, eq, gt, lt, or } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { generateSlotsFromRepeatingRule } from "~/lib/b-utils";
+import { GetAvailableSlotsSuccessResponse } from "~/lib/types";
 import { db } from "~/server/db";
 import { doctors, repeatingSlotRules, slots } from "~/server/db/schema";
 
@@ -88,8 +89,46 @@ export const GET = async (
       slotId: null,
       ...s,
     }));
-    availableSlots = [...availableSlots, ...formattedRuleSlots];
+    const nonConflictingSlots = formattedRuleSlots.filter((s) => {
+      let isConflicting =
+        availableSlots.findIndex((eS) => {
+          const today = new Date();
+
+          const existingStartDate = new Date(today);
+          existingStartDate.setHours(eS.startsAt.getHours());
+          existingStartDate.setMinutes(eS.startsAt.getMinutes());
+
+          const existingEndDate = new Date(today);
+          existingEndDate.setHours(eS.endsAt.getHours());
+          existingEndDate.setMinutes(eS.endsAt.getMinutes());
+
+          const newStartDate = new Date(today);
+          newStartDate.setHours(s.startsAt.getHours());
+          newStartDate.setMinutes(s.startsAt.getMinutes());
+
+          const newEndDate = new Date(today);
+          newEndDate.setHours(s.endsAt.getHours());
+          newEndDate.setMinutes(s.endsAt.getMinutes());
+
+          let c =
+            newStartDate.getTime() < existingEndDate.getTime() &&
+            newEndDate.getTime() > existingStartDate.getTime();
+
+          return c;
+        }) === -1;
+
+      return isConflicting;
+    });
+
+    availableSlots = [...availableSlots, ...nonConflictingSlots];
   }
 
-  return NextResponse.json({ success: true, availableSlots });
+  availableSlots = availableSlots.sort(
+    (a, b) => b.startsAt.getTime() - a.startsAt.getTime(),
+  );
+
+  return NextResponse.json({
+    success: true,
+    slots: availableSlots,
+  } as GetAvailableSlotsSuccessResponse);
 };

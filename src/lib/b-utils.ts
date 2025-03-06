@@ -1,4 +1,4 @@
-import { and, eq, gt, lt } from "drizzle-orm";
+import { and, eq, gt, lt, sql } from "drizzle-orm";
 import { db } from "~/server/db";
 import { slots, type repeatingSlotRules } from "~/server/db/schema";
 
@@ -6,6 +6,11 @@ export const difMins = (a: Date, b: Date) =>
   Math.round((a.getTime() - b.getTime()) / 60000);
 
 export const minsToMs = (mins: number) => mins * 60000;
+
+export const msSinceDayStart = (v: Date) => {
+  let c = new Date(v); //to stop js overwriting on setHours
+  return v.getTime() - c.setHours(0, 0, 0, 0);
+};
 
 export type RuleGeneratedSlot = {
   startsAt: Date;
@@ -42,11 +47,20 @@ export const generateSlotsFromRepeatingRule = async (
 
   const ensuredSlots = await Promise.all(
     slotObjects.map(async (slot) => {
+      const slotStartTime = slot.startsAt.toISOString().substring(11, 19);
+      const slotEndTime = slot.endsAt.toISOString().substring(11, 19);
+
       const slotConflict = await db.query.slots.findFirst({
         where: and(
           eq(slots.doctorId, repeatingRule.doctorId),
-          lt(slots.startsAt, slot.endsAt),
-          gt(slots.endsAt, slot.startsAt),
+          lt(
+            sql`CAST(${slots.startsAt} AS time)`,
+            sql`CAST(${slotEndTime} AS time)`,
+          ),
+          gt(
+            sql`CAST(${slots.endsAt} AS time)`,
+            sql`CAST(${slotStartTime} AS time)`,
+          ),
         ),
       });
       if (slotConflict) return false;
@@ -56,6 +70,8 @@ export const generateSlotsFromRepeatingRule = async (
   const generatedSlots: RuleGeneratedSlot[] = ensuredSlots.filter(
     (s) => s !== false,
   );
+
+  console.log(generatedSlots);
 
   return generatedSlots;
 };

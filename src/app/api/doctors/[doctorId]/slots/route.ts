@@ -108,8 +108,8 @@ export const POST = async (
       const slotConflict = await db.query.slots.findFirst({
         where: and(
           eq(slots.doctorId, doctorId),
-          lt(slots.startsAt, slot.endsAt), //existing ends before new slots time
-          gt(slots.endsAt, slot.startsAt), //existing starts after new slots end
+          lt(slots.startsAt, slot.endsAt), //ensure existing ends before new slots time
+          gt(slots.endsAt, slot.startsAt), //ensure existing starts after new slots end
         ),
       });
       if (slotConflict)

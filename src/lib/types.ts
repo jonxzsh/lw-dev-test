@@ -23,3 +23,20 @@ export interface CreatePatientSuccessResponse {
   success: boolean;
   patient: PatientType;
 }
+
+export type ApiSlot = {
+  slotId: string | null;
+  startsAt: Date;
+  endsAt: Date;
+  duration: string;
+  repeatingRuleId: string | null;
+};
+
+export interface GetAvailableSlotsSuccessResponse {
+  success: boolean;
+  slots: ApiSlot[];
+}
+
+export interface BookSlotSuccessResponse {
+  success: boolean;
+}
