@@ -36,7 +36,7 @@ const SelectExistingDoctor = ({
           </SelectContent>
         </Select>
         <Link href={`/doctor/${selectedDoctor}`}>
-          <Button variant="outline" disabled={selectedDoctor === null}>
+          <Button variant="default" disabled={selectedDoctor === null}>
             Continue
           </Button>
         </Link>

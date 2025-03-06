@@ -1,3 +1,5 @@
+"use client";
+
 import { StyledH3, StyledText } from "./typography";
 
 const ErrorMessage = ({ children }: { children: React.ReactNode }) => {
