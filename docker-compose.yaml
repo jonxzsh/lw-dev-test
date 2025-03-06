@@ -1,0 +1,33 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://lwdevtest:lwdevtest@db:5432/lwdevtest
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: lwdevtest
+      POSTGRES_PASSWORD: lwdevtest
+      POSTGRES_DB: lwdevtest
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lwdevtest"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:
