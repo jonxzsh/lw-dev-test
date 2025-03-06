@@ -47,7 +47,7 @@ npm start
 
 The repo has a Postman collection, `api_doc.postman_collection.json` that you can import to view all API routes and how to interact with them
 
-As a note - when you query slot availability and a repeating slot rule applies, the slots are created dynamically and sent back to the client without being saved in teh database. Depending on whether the slot is one-time (saved already with an ID in the `slots` table), or repeating, you need to interact with the API to book it in a different way. This is handled by the frontend.
+As a note - when you query slot availability and a repeating slot rule applies, the slots are created dynamically and sent back to the client without being saved in the database. Depending on whether the slot is one-time (saved already with an ID in the `slots` table), or repeating, you need to interact with the API to book it in a different way. This is handled by the frontend.
 
 For example, to book a slot already saved
 

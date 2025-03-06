@@ -24,7 +24,7 @@ export const POST = async (
     return NextResponse.json(
       {
         success: false,
-        message: "No doctor exists with this ID",
+        message: "No patient exists with this ID",
       },
       { status: 404 },
     );
