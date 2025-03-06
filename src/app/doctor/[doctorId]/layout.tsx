@@ -39,7 +39,7 @@ const Layout = async ({
         <StyledText>Manage bookings and slots for {doctor.username}</StyledText>
       </div>
       <div className="flex flex-col gap-4">
-        <ManageDoctorNav doctor={doctor} />
+        <ManageDoctorNav />
         {children}
       </div>
     </div>

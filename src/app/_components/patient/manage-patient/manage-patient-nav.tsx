@@ -2,7 +2,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
-const ManageDoctorNav = () => {
+const ManagePatientNav = () => {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -13,12 +13,12 @@ const ManageDoctorNav = () => {
         onValueChange={(v) => router.push(v)}
       >
         <TabsList>
+          <TabsTrigger value="book">New Booking</TabsTrigger>
           <TabsTrigger value="bookings">Bookings</TabsTrigger>
-          <TabsTrigger value="slots">Slots</TabsTrigger>
         </TabsList>
       </Tabs>
     </div>
   );
 };
 
-export default ManageDoctorNav;
+export default ManagePatientNav;
