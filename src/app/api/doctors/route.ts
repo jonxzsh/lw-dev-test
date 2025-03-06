@@ -5,6 +5,12 @@ import { CreateDoctorBodySchema } from "~/lib/zod-schema/doctor";
 import { db } from "~/server/db";
 import { doctors } from "~/server/db/schema";
 
+export const GET = async (req: NextRequest) => {
+  const doctors = await db.query.doctors.findMany();
+
+  return NextResponse.json({ success: true, doctors });
+};
+
 export const POST = async (req: NextRequest) => {
   let body;
   try {
