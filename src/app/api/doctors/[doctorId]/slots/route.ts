@@ -2,7 +2,7 @@ import { createId } from "@paralleldrive/cuid2";
 import { and, eq, gt, lt } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { env } from "~/env";
-import { difMins, minsToMs } from "~/lib/utils";
+import { difMins, minsToMs } from "~/lib/b-utils";
 import { CreateSlotsBodySchema } from "~/lib/zod-schema/slots";
 import { db } from "~/server/db";
 import { doctors, repeatingSlotRules, slots } from "~/server/db/schema";

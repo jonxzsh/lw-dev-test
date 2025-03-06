@@ -1,6 +1,6 @@
 import { and, arrayContains, eq, gt, lt, or } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
-import { generateSlotsFromRepeatingRule } from "~/lib/utils";
+import { generateSlotsFromRepeatingRule } from "~/lib/b-utils";
 import { db } from "~/server/db";
 import { doctors, repeatingSlotRules, slots } from "~/server/db/schema";
 

@@ -1,7 +1,7 @@
 import { and, eq, gt, lt } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
 import { env } from "~/env";
-import { difMins, minsToMs } from "~/lib/utils";
+import { difMins, minsToMs } from "~/lib/b-utils";
 import { BookSlotBodySchema } from "~/lib/zod-schema/slots";
 import { db } from "~/server/db";
 import {
